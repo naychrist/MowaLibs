@@ -63,15 +63,15 @@ void SimpleGUI::init(AppNative* app) {
     textureFont = gl::TextureFont::create( textFont );
     if ( app->getSettings().isMultiTouchEnabled() ) {
         selectedControls.clear();
-        cbTouchesBegan = app->registerTouchesBegan( this, &SimpleGUI::onTouchesBegan );
-        cbTouchesEnded = app->registerTouchesEnded( this, &SimpleGUI::onTouchesEnded );	
-        cbTouchesMoved = app->registerTouchesMoved( this, &SimpleGUI::onTouchesMoved );
+		cbTouchesBegan = app->getWindow()->getSignalTouchesBegan().connect( std::bind( &SimpleGUI::onTouchesBegan, this, std::placeholders::_1 ) );
+	    cbTouchesEnded = app->getWindow()->getSignalTouchesEnded().connect( std::bind( &SimpleGUI::onTouchesEnded, this, std::placeholders::_1 ) );
+	    cbTouchesMoved = app->getWindow()->getSignalTouchesMoved().connect( std::bind( &SimpleGUI::onTouchesMoved, this, std::placeholders::_1 ) );
     }
     else {
         selectedControl = NULL;
-        cbMouseDown = app->registerMouseDown( this, &SimpleGUI::onMouseDown );
-        cbMouseUp   = app->registerMouseUp(   this, &SimpleGUI::onMouseUp   );	
-        cbMouseDrag = app->registerMouseDrag( this, &SimpleGUI::onMouseDrag );
+        cbMouseDown = app->getWindow()->getSignalMouseDown().connect( std::bind( &SimpleGUI::onMouseDown, this, std::placeholders::_1 ) );
+	    cbMouseUp = app->getWindow()->getSignalMouseUp().connect( std::bind( &SimpleGUI::onMouseUp, this, std::placeholders::_1 ) );
+	    cbMouseDrag = app->getWindow()->getSignalMouseDrag().connect( std::bind( &SimpleGUI::onMouseDrag, this, std::placeholders::_1 ) );
     }
 }
 

@@ -62,12 +62,8 @@ private:
 	Control* selectedControl;
     std::map<uint64_t, Control*> selectedControls; // for multitouch
 	
-	CallbackId	cbMouseDown;
-	CallbackId	cbMouseUp;
-	CallbackId  cbMouseDrag;	
-	CallbackId	cbTouchesBegan;
-	CallbackId	cbTouchesEnded;
-	CallbackId  cbTouchesMoved;	
+	ci::signals::scoped_connection  cbMouseDown, cbMouseUp, cbMouseDrag;
+	ci::signals::scoped_connection  cbTouchesBegan, cbTouchesEnded, cbTouchesMoved;
 
 	void	init(AppNative* app);	
 public:
